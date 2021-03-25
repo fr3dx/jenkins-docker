@@ -3,7 +3,7 @@ pipeline {
         timeout(time: 1, unit: 'HOURS')
     }
     agent {
-        label 'ubuntu-1804 && amd64 && docker'
+        label 'all'
     }
     stages {
         stage('build and push') {
@@ -13,8 +13,8 @@ pipeline {
             sh "docker build -t docker/getting-started ."
 
             steps {
-                withDockerRegistry([url: "", credentialsId: "dockerbuildbot-index.docker.io"]) {
-                    sh("docker push docker/getting-started")
+                withDockerRegistry([url: "", credentialsId: "https://hub.docker.com/repository/docker/ferencmolnar/jenkins-docker"]) {
+                    sh("docker push docker/jenkins-docker")
                 }
             }
         }
